@@ -6,7 +6,7 @@
 
  # Creacion de tablas para entidades.
  CREATE TABLE conductores (
-    dni SMALLINT unsigned NOT NULL,
+    dni BIGINT unsigned NOT NULL,
     nombre VARCHAR(20) NOT NULL,
     apellido VARCHAR(20) NOT NULL,
     direccion VARCHAR(40) NOT NULL,
@@ -22,7 +22,7 @@
     marca VARCHAR(20) NOT NULL,
     modelo VARCHAR(20) NOT NULL,
     color VARCHAR(40) NOT NULL,
-    dni SMALLINT unsigned NOT NULL,
+    dni BIGINT unsigned NOT NULL,
 
     CONSTRAINT pk_automoviles
     PRIMARY KEY (patente),
@@ -203,7 +203,8 @@ CREATE TABLE accede (
     GRANT ALL PRIVILEGES ON parquimetros.* TO 'admin'@'localhost' WITH GRANT OPTION;
 
     CREATE USER 'venta'@'localhost'  IDENTIFIED BY 'venta';
-    GRANT ALL PRIVILEGES ON parquimetros.* TO 'venta'@'localhost' WITH GRANT OPTION;
-
+    GRANT INSERT(saldo, tipo, patente), UPDATE (saldo), SELECT(id_tarjeta) ON parquimetros.tarjetas TO 'venta'@'localhost';
+    # Duda: el usuario venta para poder actualizar el saldo de una tarjeta en especifico deberia poder acceder al id_tarjeta mediante el GRANT SELECT(id_tarjeta), esto es correcto? Y si lo quiero hacer por el numero de patente, igual es verdad que una patente puede estar asociada a muchas tarjetas.
+    
     CREATE USER 'inspector'@'localhost'  IDENTIFIED BY 'inspector';
     GRANT SELECT ON parquimetros.estacionados TO 'inspector'@'localhost';
