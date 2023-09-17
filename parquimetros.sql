@@ -195,6 +195,7 @@ CREATE TABLE accede (
         JOIN tarjetas as t ON e.id_tarjeta = t.id_tarjeta)
     WHERE (e.fecha_ent!=NULL and e.hora_ent!=NULL) and (e.fecha_sal=NULL and e.hora_sal=NULL);
 
+ # La vista esta vacía cuando hay datos que deberian figurar, figura todo bien sin la clausula WHERE.
 
  #-------------------------------------------------------------------------
  # Creacion de usuarios y otorgamiento de privilegios
@@ -204,7 +205,11 @@ CREATE TABLE accede (
 
     CREATE USER 'venta'@'localhost'  IDENTIFIED BY 'venta';
     GRANT INSERT(saldo, tipo, patente), UPDATE (saldo), SELECT(id_tarjeta) ON parquimetros.tarjetas TO 'venta'@'localhost';
-    # Duda: el usuario venta para poder actualizar el saldo de una tarjeta en especifico deberia poder acceder al id_tarjeta mediante el GRANT SELECT(id_tarjeta), esto es correcto? Y si lo quiero hacer por el numero de patente, igual es verdad que una patente puede estar asociada a muchas tarjetas.
-    
+
     CREATE USER 'inspector'@'localhost'  IDENTIFIED BY 'inspector';
     GRANT SELECT ON parquimetros.estacionados TO 'inspector'@'localhost';
+    GRANT SELECT(legajo, password) ON parquimetros.inspectores TO 'inspector'@'localhost'; # Duda ya que de esta manera un inspector puede consultar por todos los inspectores.
+    GRANT SELECT(patente) ON parquimetros.automoviles TO 'inspector'@'localhost'; # Duda si es sobre automoviles o estacionados.
+    GRANT INSERT ON parquimetros.multa TO 'inspector'@'localhost';
+    GRANT INSERT ON parquimetros.accede TO 'inspector'@'localhost';
+    
