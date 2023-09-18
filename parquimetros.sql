@@ -189,13 +189,10 @@ CREATE TABLE accede (
  #-------------------------------------------------------------------------
  # Creacion de vista estacionados 
     CREATE VIEW estacionados AS 
-    SELECT u.calle, u.altura, t.patente, e.fecha_ent, e.hora_ent
-    FROM (((ubicaciones as u JOIN parquimetros as p ON u.calle = p.calle and u.altura = p.altura) 
+    SELECT u.calle, u.altura, t.patente, e.fecha_ent, e.hora_ent FROM (((ubicaciones as u JOIN parquimetros as p ON u.calle = p.calle and u.altura = p.altura) 
         JOIN estacionamientos as e ON p.id_parq = e.id_parq)
         JOIN tarjetas as t ON e.id_tarjeta = t.id_tarjeta)
-    WHERE (e.fecha_ent!=NULL and e.hora_ent!=NULL) and (e.fecha_sal=NULL and e.hora_sal=NULL);
-
- # La vista esta vacía cuando hay datos que deberian figurar, figura todo bien sin la clausula WHERE.
+    WHERE (e.fecha_ent IS NOT NULL and e.hora_ent IS NOT NULL) and (e.fecha_sal IS NULL and e.hora_sal IS NULL);
 
  #-------------------------------------------------------------------------
  # Creacion de usuarios y otorgamiento de privilegios
