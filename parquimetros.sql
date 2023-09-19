@@ -197,16 +197,19 @@ CREATE TABLE accede (
  #-------------------------------------------------------------------------
  # Creacion de usuarios y otorgamiento de privilegios
 
-    CREATE USER 'admin'@'localhost'  IDENTIFIED BY 'admin';
+    CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';
     GRANT ALL PRIVILEGES ON parquimetros.* TO 'admin'@'localhost' WITH GRANT OPTION;
+    GRANT CREATE USER ON *.* TO 'admin'@'localhost';
+ 
+    CREATE USER 'venta'@'%' IDENTIFIED BY 'venta';
+    GRANT INSERT(saldo, tipo, patente), UPDATE (saldo), SELECT(id_tarjeta) ON parquimetros.tarjetas TO 'venta'@'%';
 
-    CREATE USER 'venta'@'localhost'  IDENTIFIED BY 'venta';
-    GRANT INSERT(saldo, tipo, patente), UPDATE (saldo), SELECT(id_tarjeta) ON parquimetros.tarjetas TO 'venta'@'localhost';
+    CREATE USER 'inspector'@'%' IDENTIFIED BY 'inspector';
+    GRANT SELECT ON parquimetros.estacionados TO 'inspector'@'%';
+    GRANT SELECT(legajo, password) ON parquimetros.inspectores TO 'inspector'@'%'; 
+    GRANT SELECT(patente) ON parquimetros.automoviles TO 'inspector'@'%'; 
+    GRANT INSERT ON parquimetros.multa TO 'inspector'@'%';
+    GRANT INSERT ON parquimetros.accede TO 'inspector'@'%';
 
-    CREATE USER 'inspector'@'localhost'  IDENTIFIED BY 'inspector';
-    GRANT SELECT ON parquimetros.estacionados TO 'inspector'@'localhost';
-    GRANT SELECT(legajo, password) ON parquimetros.inspectores TO 'inspector'@'localhost'; # Duda ya que de esta manera un inspector puede consultar por todos los inspectores.
-    GRANT SELECT(patente) ON parquimetros.automoviles TO 'inspector'@'localhost'; # Duda si es sobre automoviles o estacionados.
-    GRANT INSERT ON parquimetros.multa TO 'inspector'@'localhost';
-    GRANT INSERT ON parquimetros.accede TO 'inspector'@'localhost';
+    flush privileges;
     

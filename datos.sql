@@ -54,7 +54,7 @@ INSERT INTO parquimetros(id_parq, numero, calle, altura) VALUES(35, 4, "Estomba"
 
 
 INSERT INTO estacionamientos(id_tarjeta, id_parq, fecha_ent, hora_ent, fecha_sal, hora_sal) VALUES(9, 21, "2023-09-10-", "08:00", "2023-09-11", "09:00");
-INSERT INTO estacionamientos(id_tarjeta, id_parq, fecha_ent, hora_ent, fecha_sal, hora_sal) VALUES(25, 1, "2023-09-11", "08:00", "2023-09-15", "08:30");
+INSERT INTO estacionamientos(id_tarjeta, id_parq, fecha_ent, hora_ent, fecha_sal, hora_sal) VALUES(25, 1, "2023-09-11", "08:00", NULL, NULL);
 INSERT INTO estacionamientos(id_tarjeta, id_parq, fecha_ent, hora_ent, fecha_sal, hora_sal) VALUES(58, 34, "2023-09-16","08:00", NULL, NULL);
 
 INSERT INTO accede(legajo, id_parq, fecha, hora) VALUES(205, 21, "2023-09-10", "08:30");

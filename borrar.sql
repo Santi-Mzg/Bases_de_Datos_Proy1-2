@@ -2,9 +2,9 @@ drop database parquimetros;
 
 drop user 'admin'@'localhost';
 
-drop user 'venta'@'localhost';
+drop user 'venta'@'%';
 
-drop user 'inspector'@'localhost';
+drop user 'inspector'@'%';
 
 flush privileges;
 
