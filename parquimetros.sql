@@ -203,13 +203,13 @@ CREATE TABLE accede (
  
     CREATE USER 'venta'@'%' IDENTIFIED BY 'venta';
     GRANT INSERT(saldo, tipo, patente), UPDATE (saldo), SELECT(id_tarjeta) ON parquimetros.tarjetas TO 'venta'@'%';
+    GRANT SELECT ON parquimetros.tipos_tarjeta TO 'venta'@'%';
 
     CREATE USER 'inspector'@'%' IDENTIFIED BY 'inspector';
-    GRANT SELECT ON parquimetros.estacionados TO 'inspector'@'%';
+    GRANT SELECT ON parquimetros.parquimetros, parquimetros.estacionados, parquimetros.asociado_con TO 'inspector'@'%';
     GRANT SELECT(legajo, password) ON parquimetros.inspectores TO 'inspector'@'%'; 
     GRANT SELECT(patente) ON parquimetros.automoviles TO 'inspector'@'%'; 
-    GRANT INSERT ON parquimetros.multa TO 'inspector'@'%';
-    GRANT INSERT ON parquimetros.accede TO 'inspector'@'%';
+    GRANT INSERT ON parquimetros.multa, parquimetros.accede TO 'inspector'@'%';
 
     flush privileges;
     
